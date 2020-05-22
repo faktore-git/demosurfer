@@ -7,7 +7,7 @@ $configuration = [
     'baseUrl'       => 'http://demosurfer.develop/',
 
     'php'           => '/usr/bin/php',
-    'repository'    => 'git@github.com:faktore-git/demosurfer.git',
+    'repository'    => 'https://github.com/faktore-git/demosurfer.git',
     'branch'        => 'master',
     'environment'   => 'production',
 
