@@ -5,7 +5,7 @@ return [
         'debug' => '',
         'explicitADmode' => 'explicitAllow',
         'installToolPassword' => 'definedInAdditionalConfiguration',
-        'loginSecurityLevel' => 'rsa',
+        'loginSecurityLevel' => 'normal',
         'versionNumberInFilename' => '0',
     ],
     'DB' => [
@@ -24,6 +24,22 @@ return [
     ],
     'EXT' => [
         'extConf' => [
+            'backend' => 'a:6:{s:9:"loginLogo";s:0:"";s:19:"loginHighlightColor";s:0:"";s:20:"loginBackgroundImage";s:0:"";s:13:"loginFootnote";s:0:"";s:11:"backendLogo";s:0:"";s:14:"backendFavicon";s:0:"";}',
+            'extensionmanager' => 'a:2:{s:21:"automaticInstallation";s:1:"1";s:11:"offlineMode";s:1:"0";}',
+        ],
+    ],
+    'EXTENSIONS' => [
+        'backend' => [
+            'backendFavicon' => '',
+            'backendLogo' => '',
+            'loginBackgroundImage' => '',
+            'loginFootnote' => '',
+            'loginHighlightColor' => '',
+            'loginLogo' => '',
+        ],
+        'extensionmanager' => [
+            'automaticInstallation' => '1',
+            'offlineMode' => '0',
         ],
     ],
     'FE' => [
@@ -33,7 +49,7 @@ return [
         'compressionLevel' => '0',
         'debug' => '',
         'hidePagesIfNotTranslatedByDefault' => '1',
-        'loginSecurityLevel' => 'rsa',
+        'loginSecurityLevel' => 'normal',
         'pageNotFoundOnCHashError' => '0',
         'pageNotFound_handling' => 'REDIRECT:404',
     ],
@@ -78,5 +94,8 @@ return [
         ],
         'sitename' => 'TYPO3',
         'systemLogLevel' => '2',
+        'systemMaintainers' => [
+            1,
+        ],
     ],
 ];
