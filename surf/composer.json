@@ -1,0 +1,23 @@
+{
+  "config": {
+    "vendor-dir": "Packages/Libraries",
+    "bin-dir": "bin",
+    "secure-http": false
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://composer.typo3.org/"
+    }
+  ],
+  "minimum-stability": "beta",
+  "require": {
+    "typo3/surf": "^2.0.0",
+    "intera/typo3-surf-tasks": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Faktore\\Surf\\": "Packages/Libraries/faktore/typo3-surf-tasks/src"
+    }
+  }
+}
