@@ -16,8 +16,6 @@ $configuration = [
     'remoteRoot'    => '/var/www/demosurfer/',
     'remoteDocRoot' => '/var/www/demosurfer/releases/current/htdocs/web/',
     'sshUser'       => 'demosurfer',
-
-    'uuid'          => 'TheresAWorldInAPlaceCanIKnowThatItIsAUUID'
 ];
 
 $environment = ucfirst($configuration['environment']);
@@ -55,34 +53,9 @@ $application->addNode($liveNode)
         \TYPO3\Flow\Utility\Files::concatenatePaths([$deployment->getWorkspacePath($application), ''])
     )
     ->setOption('baseUrl', $configuration['baseUrl'])
-    ->setOption('scriptIdentifier', $configuration['uuid'])
     ->setDeploymentPath($configuration['remoteRoot']);
 
 $deployment->addApplication($application);
-
-$workflow->defineTask(
-    'Faktore\\Surf\\DefinedTask\\Node\\OpcacheSymLinkCreateTask',
-    'TYPO3\\Surf\\Task\\ShellTask',
-    [
-        'command' =>
-            [
-                "ln -sf " . $configuration['remoteRoot'] . "/releases/current/surf-opcache-reset-" . $configuration['uuid'] . ".php " .
-                $configuration['remoteDocRoot'] . "/surf-opcache-reset-" . $configuration['uuid'] . ".php"
-            ]
-    ]
-);
-
-$workflow->defineTask(
-    'Faktore\\Surf\\DefinedTask\\Node\\OpcacheSymLinkDeleteTask',
-    'TYPO3\\Surf\\Task\\ShellTask',
-    [
-        'command' =>
-            [
-                "rm -f " . $configuration['remoteRoot'] . "/releases/current/surf-opcache-reset-" . $configuration['uuid'] . ".php",
-                "rm -f " . $configuration['remoteDocRoot'] . "/surf-opcache-reset-" . $configuration['uuid'] . ".php",
-            ]
-    ]
-);
 
 $workflow->defineTask(
     'Faktore\\Surf\\DefinedTask\\Node\\EnvironmentSymLinkTask',
@@ -101,19 +74,6 @@ $workflow->defineTask(
 $deployment->setWorkflow($workflow);
 
 $deployment->onInitialize(function() use ($workflow, $application) {
-    $workflow->addTask(\TYPO3\Surf\Task\Php\WebOpcacheResetCreateScriptTask::class, 'package', $application);
-    $workflow->addTask(\TYPO3\Surf\Task\Php\WebOpcacheResetExecuteTask::class, 'switch', $application);
-
-    $workflow->afterTask(
-        \TYPO3\Surf\Task\Php\WebOpcacheResetCreateScriptTask::class,
-        'Faktore\\Surf\\DefinedTask\\Node\\OpcacheSymLinkCreateTask',
-        $application
-    );
-    $workflow->afterTask(
-        \TYPO3\Surf\Task\Php\WebOpcacheResetExecuteTask::class,
-        'Faktore\\Surf\\DefinedTask\\Node\\OpcacheSymLinkDeleteTask',
-        $application
-    );
     $workflow->afterTask(
         \TYPO3\Surf\Task\Generic\CreateSymlinksTask::class,
         'Faktore\\Surf\\DefinedTask\\Node\\EnvironmentSymLinkTask',
